@@ -27,13 +27,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/h2-console/**",
             "/**",
             "/items/lost",
-            "/items/found"
+            "/items/found",
+            "/items/detail/**"
     };
 
     private static final String[] USER_MATCHERS = {
+            "/items/userFound"
     };
 
     private static final String[] ADMIN_MATCHERS = {
+            "/items/process",
+            "/items//found"
     };
 
     private static final String[] USER_ADMIN_MATCHERS = {
@@ -51,6 +55,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers(PUBLIC_MATCHERS).permitAll()
+                    .antMatchers(USER_MATCHERS).hasAuthority("USER")
+                    .antMatchers(ADMIN_MATCHERS).hasAuthority("ADMIN")
                     .antMatchers(USER_ADMIN_MATCHERS).hasAnyAuthority("ADMIN", "USER")
                         .anyRequest().authenticated()
                         .and()

@@ -3,22 +3,52 @@
       xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="common/base :: head"></head>
 <body>
-<nav th:replace="common/base :: navbar(${funName})"></nav>
-<h2>Items</h2>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Category</th>
-    </tr>
-    <tr th:each="item : ${items}">
-        <td th:text="${item.title}"></td>
-        <td th:text="${item.category}"></td>
-        <td>
-            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/items/update/{id}(id=${item.id})}">Change Missing Status</a> -
-            <a th:href="@{/items/detail/{id}(id=${item.id})}">Detail</a>
-        </td>
-    </tr>
-</table>
+<div class="wrapper">
+    <div th:replace="common/base :: navbar(${funName})"></div>
+    <div class="main-panel">
+        <nav th:replace="common/base :: topNavbar"></nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-8 ml-auto mr-auto">
+                                <div class="card">
+                                    <div class="header text-center">
+                                        <h4 class="title">Items</h4>
+                                        <br/>
+                                    </div>
+                                    <div class="content table-responsive table-upgrade">
+                                        <table class="table">
+                                            <thead>
+                                            <th>Title</th>
+                                            <th class="text-center">Category</th>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="item : ${items}">
+                                                <td th:text="${item.title}"></td>
+                                                <td th:text="${item.category}"></td>
+                                                <td>
+                                                    <a sec:authorize="hasAuthority('ADMIN')"
+                                                       class="btn btn-round btn-fill btn-warning"
+                                                       th:href="@{/items/update/{id}(id=${item.id})}"
+                                                       th:text="${item.lost}? 'Change to Found': 'Change to Lost'"></a>
+                                                    <a th:href="@{/items/detail/{id}(id=${item.id})}"
+                                                       class="btn btn-round btn-fill btn-info">Detail</a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div th:replace="common/base :: jslinks"></div>
 </body>
 </html>

@@ -1,30 +1,68 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/base :: head"></head>
 <body>
-<nav th:replace="common/base :: navbar('')"></nav>
-
-<h2>Item</h2>
-<div th:if="${image != null}">
-    <img th:src="${image}" width="100" height="100"/>
+<div class="wrapper">
+    <div th:replace="common/base :: navbar('')"></div>
+    <div class="main-panel">
+        <nav th:replace="common/base :: topNavbar"></nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="col-md-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Item</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-11 pr-1">
+                                    <div th:if="${image != null}">
+                                        <img th:src="${image}" width="100" height="100"/>
+                                    </div>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-md-11 pr-1">
+                                    <label>Title</label>
+                                    <p th:text="${item.title}"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11 pr-1">
+                                    <label>Description</label>
+                                    <p th:text="${item.description}"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11 pr-1">
+                                    <label>Category</label>
+                                    <p th:text="${item.category}"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11 pr-1">
+                                    <label>Found?</label>
+                                    <p th:text="${item.lost}? 'Yes' : 'Not yet'"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11 pr-1">
+                                    <label>Owner</label>
+                                    <table>
+                                        <tr th:each="user : ${item.users}">
+                                            <td th:text="${user.firstName}"></td>
+                                            <td th:text="${user.lastName}"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<h3>Title</h3>
-<div th:text="${item.title}"></div>
-<h3>Description</h3>
-<div th:text="${item.description}"></div>
-<h3>Category</h3>
-<div th:text="${item.category}"></div>
-<h3>Owner</h3>
-<table>
-    <tr th:each="user : ${item.users}">
-        <td th:text="${user.firstName}"></td>
-        <td th:text="${user.lastName}"></td>
-    </tr>
-</table>
-
 <div th:replace="common/base :: jslinks"></div>
-
 </body>
 </html>

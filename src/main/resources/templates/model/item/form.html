@@ -3,47 +3,105 @@
       xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="common/base :: head"></head>
 <body>
-<nav th:replace="common/base :: navbar('')"></nav>
-<form action="#"
-      th:action="@{/items/process}"
-      th:object="${item}"
-      method="post">
-    <input type="hidden" th:field="*{id}"/>
+<div class="wrapper">
+    <div th:replace="common/base :: navbar('')"></div>
 
+    <div class="main-panel">
+        <nav th:replace="common/base :: topNavbar"></nav>
+        <div class="content">
+            <div class="container-fluid">
+                <form action="#"
+                      th:action="@{/items/process}"
+                      th:object="${item}"
+                      method="post">
+                    <input type="hidden" th:field="*{id}"/>
 
-    Title: <input type="text" th:field="*{title}"/>
-    <span th:if="${#fields.hasErrors('title')}"
-          th:errors="*{name}"></span><br/>
+                    <div class="col-md-5">
+                        <div class="card">
+                            <div class="card-header">
+                                Item
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-11 pr-1">
+                                        <div class="form-group">
+                                            <label> Title :</label>
+                                            <input type="text" class="form-control" th:field="*{title}"/>
+                                            <span th:if="${#fields.hasErrors('title')}" th:errors="*{name}"></span><br/>
+                                        </div>
+                                    </div>
+                                </div>
 
-    Description: <input type="text" th:field="*{description}"/>
-    <span th:if="${#fields.hasErrors('description')}"
-          th:errors="*{description}"></span><br/>
+                                <div class="row">
+                                    <div class="col-md-11 pr-1">
+                                        <div class="form-group">
+                                            <label> Description :</label>
+                                            <input type="text" class="form-control" th:field="*{description}"/>
+                                            <span th:if="${#fields.hasErrors('description')}"
+                                                  th:errors="*{description}"></span><br/>
+                                        </div>
+                                    </div>
+                                </div>
 
-    Category<br/>
-    Clothes <input type="radio" th:field="*{category}" value="CLOTHES"/>
-    Pets <input type="radio" th:field="*{category}" value="PETS"/>
-    Other <input type="radio" th:field="*{category}" value="OTHER"/>
-    <br/>
+                                <div class="row">
+                                    <div class="col-md-11 pr-1">
+                                        <div class="form-group">
+                                            <label> Category </label>
+                                            <h6>Clothes<input type="radio" th:field="*{category}"
+                                                              value="CLOTHES"/></h6>
+                                            <br/>
+                                            <h6>Pets<input type="radio" th:field="*{category}"
+                                                           value="PETS"/></h6>
+                                            <br/>
+                                            <h6>Other<input type="radio" th:field="*{category}"
+                                                            value="OTHER"/></h6>
+                                        </div>
+                                    </div>
+                                </div>
 
-    <div sec:authorize="hasAuthority('ADMIN')">
-        Owner Username: <input type="text" th:field="*{owner}"/>
-        <span th:if="${#fields.hasErrors('owner')}"
-              th:errors="*{owner}"></span><br/>
+                                <div sec:authorize="hasAuthority('ADMIN')" class="row">
+                                    <div class="col-md-11 pr-1">
+                                        <div class="form-group">
+                                            <label> Owner Username: </label>
+                                            <input type="text" class="form-control" th:field="*{owner}"/>
+                                            <span th:if="${#fields.hasErrors('owner')}"
+                                                  th:errors="*{owner}"></span><br/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-11 pr-1">
+                                        <div class="form-group">
+                                            <label for="bookimage"> Image link </label>
+                                            <input type="url" th:field="*{image}" class="form-control" id="bookimage"
+                                                   aria-describedby="urlHelp"
+                                                   placeholder="Enter image link"/>
+                                            <small class="form-text text-muted" id="urlHelp">Enter the url of an image
+                                                you would
+                                                like to use
+                                                for this
+                                                book
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-5 pr-1">
+                                        <button type="submit" class="btn btn-info btn-fill">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label for="bookimage">Image link</label>
-        <input type="url" th:field="*{image}" class="form-control" id="bookimage" aria-describedby="urlHelp"
-               placeholder="Enter image link"/>
-        <small class="form-text text-muted" id="urlHelp">Enter the url of an image you would like to use for this book
-        </small>
-    </div>
-
-    <br/>
-    <input type="submit" value="Submit"/>
-
-
-</form>
+</div>
 <div th:replace="common/base :: jslinks"></div>
 </body>
 </html>

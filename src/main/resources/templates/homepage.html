@@ -11,12 +11,16 @@
         <nav th:replace="common/base :: topNavbar"></nav>
         <div class="content">
             <div class="container-fluid">
+                <h3 sec:authorize="!hasAnyAuthority('USER','ADMIN')">
+                    You have not <strong>LOGGED IN</strong>
+                </h3>
+
                 <h3 sec:authorize="hasAuthority('USER')">
-                    You can see this because you are an <strong>USER</strong>
+                    You are an <strong>USER</strong>
                 </h3>
 
                 <h3 sec:authorize="hasAuthority('ADMIN')">
-                    You can see this because you are an <strong>ADMIN</strong>
+                    You are an <strong>ADMIN</strong>
                 </h3>
             </div>
         </div>

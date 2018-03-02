@@ -44,7 +44,7 @@ public class ItemController {
         return itemDir + "list";
     }
 
-    // Public
+    // User
     @RequestMapping("/userFound")
     public String userFoundItemsList(Model model, Authentication auth){
         User user = userRepository.findUserByUsername(auth.getName());
@@ -101,8 +101,8 @@ public class ItemController {
         User user = userRepository.findUserByUsername(auth.getName());
         if(user.getRole().equalsIgnoreCase("USER")){
             item.addUser(user);
-            user.addItem(item);
             itemRepository.save(item);
+            user.addItem(item);
             userRepository.save(user);
         }else if(user.getRole().equalsIgnoreCase("ADMIN")){
             if(userRepository.findUserByUsername(item.getOwner()) == null){
