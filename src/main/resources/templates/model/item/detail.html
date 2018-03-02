@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('')"></nav>
+
+<h2>Item</h2>
+<div th:if="${image != null}">
+    <img th:src="${image}" width="100" height="100"/>
+</div>
+
+<h3>Title</h3>
+<div th:text="${item.title}"></div>
+<h3>Description</h3>
+<div th:text="${item.description}"></div>
+<h3>Category</h3>
+<div th:text="${item.category}"></div>
+<h3>Owner</h3>
+<table>
+    <tr th:each="user : ${item.users}">
+        <td th:text="${user.firstName}"></td>
+        <td th:text="${user.lastName}"></td>
+    </tr>
+</table>
+
+<div th:replace="common/base :: jslinks"></div>
+
+</body>
+</html>

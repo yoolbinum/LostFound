@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar(home)"></nav>
+
+<h3 sec:authorize="hasAuthority('ADMIN')">You can see this because you are an administrator</h3>
+
+<h3 sec:authorize="hasAuthority('USER')">You can see this because you are an ordinary user</h3>
+
+<a href="/logout">Log out</a>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>

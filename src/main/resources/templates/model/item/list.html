@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar(${funName})"></nav>
+<h2>Items</h2>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Category</th>
+    </tr>
+    <tr th:each="item : ${items}">
+        <td th:text="${item.title}"></td>
+        <td th:text="${item.category}"></td>
+        <td>
+            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/items/update/{id}(id=${item.id})}">Change Missing Status</a> -
+            <a th:href="@{/items/detail/{id}(id=${item.id})}">Detail</a>
+        </td>
+    </tr>
+</table>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>

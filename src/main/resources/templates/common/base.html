@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Lost/Found Items</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+</head>
+<body>
+
+<nav th:fragment="navbar(active)" class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"
+                th:classappend="(${active}=='lostItemsList')? 'active':''">
+                <a class="nav-link" th:href="@{/items/lost}">Missing Items</a>
+            </li>
+            <li class="nav-item"
+                th:classappend="(${active}=='foundItemsList')? 'active':''">
+                <a class="nav-link" th:href="@{/items/found}">Found Items</a>
+            </li>
+            <li sec:authorize="hasAuthority('USER')" class="nav-item"
+                th:classappend="(${active}=='userFoundItemsList')? 'active':''">
+                <a class="nav-link" th:href="@{/items/userFound}">Your Found Items</a>
+            </li>
+            <li sec:authorize="hasAnyAuthority('USER', 'ADMIN')" class="nav-item"
+                th:classappend="(${active}=='itemForm')? 'active':''">
+                <a class="nav-link" th:href="@{/items/add}">Report Item Missing</a>
+            </li>
+            <li sec:authorize="hasAuthority('ADMIN')" class="nav-item"
+                th:classappend="(${active}=='itemsList')? 'active':''">
+                <a class="nav-link" th:href="@{/items}">All Item</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+
+<div th:fragment="jslinks">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</div>
+</body>
+</html>

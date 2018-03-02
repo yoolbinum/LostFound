@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h4>New User Registration</h4>
+<form th:action="@{/register}" th:object="${user}" method="post">
+    Username
+    <mark><strong>
+    <span th:if="${#fields.hasErrors('username')}"
+          th:errors="*{username}">Username Error</span>
+    </strong></mark>
+    <input type="text" th:field="*{username}" placeholder="Enter name"/><br />
+
+    Password
+    <mark><strong>
+    <span th:if="${#fields.hasErrors('password')}"
+          th:errors="*{password}">Password Error</span>
+    </strong></mark>
+    <input type="password" th:field="*{password}" placeholder="password"/><br/>
+
+    First Name
+    <mark><strong>
+    <span th:if="${#fields.hasErrors('firstName')}"
+          th:errors="*{firstName}">First Name Error</span>
+    </strong></mark>
+    <input type="text" th:field="*{firstName}" placeholder="firstName"/><br/>
+
+    Last Name
+    <mark><strong>
+    <span th:if="${#fields.hasErrors('lastName')}"
+          th:errors="*{lastName}">Last Name Error</span>
+    </strong></mark>
+    <input type="text" th:field="*{lastName}" placeholder="lastName"/><br/>
+
+
+    Role<br/>
+    User <input type="radio" th:field="*{role}" value="USER"/>
+    Admin <input type="radio" th:field="*{role}" value="ADMIN"/>
+    <br/>
+
+    <button type="submit" class="btn btn-default"> Submit</button>
+
+
+</form>
+
+</body>
+</html>
