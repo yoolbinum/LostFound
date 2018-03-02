@@ -25,7 +25,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String[] PUBLIC_MATCHERS = {
             "/register",
             "/h2-console/**",
-            "/",
+            "/**",
             "/items/lost",
             "/items/found"
     };

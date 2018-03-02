@@ -4,13 +4,25 @@
 
 <head th:replace="common/base :: head"></head>
 <body>
-<nav th:replace="common/base :: navbar(home)"></nav>
+<div class="wrapper">
+    <div th:replace="common/base :: navbar(home)"></div>
 
-<h3 sec:authorize="hasAuthority('ADMIN')">You can see this because you are an administrator</h3>
+    <div class="main-panel">
+        <nav th:replace="common/base :: topNavbar"></nav>
+        <div class="content">
+            <div class="container-fluid">
+                <h3 sec:authorize="hasAuthority('USER')">
+                    You can see this because you are an <strong>USER</strong>
+                </h3>
 
-<h3 sec:authorize="hasAuthority('USER')">You can see this because you are an ordinary user</h3>
+                <h3 sec:authorize="hasAuthority('ADMIN')">
+                    You can see this because you are an <strong>ADMIN</strong>
+                </h3>
+            </div>
+        </div>
+    </div>
 
-<a href="/logout">Log out</a>
+</div>
 <div th:replace="common/base :: jslinks"></div>
 </body>
 </html>
