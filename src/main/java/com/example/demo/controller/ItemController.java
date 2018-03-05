@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
 
@@ -27,6 +28,26 @@ public class ItemController {
     UserRepository userRepository;
 
     final private String itemDir = "model/item/";
+
+    // PUBLIC
+    @GetMapping("/search")
+    public String getSearch() {
+        return itemDir + "searchForm";
+    }
+
+    // PUBLIC
+    @PostMapping("/search")
+    public String showSearch(HttpServletRequest request, Model model) {
+        String searchString = request.getParameter("search");
+        model.addAttribute("search", searchString);
+        if (searchString.equalsIgnoreCase("CLOTHES") || searchString.equalsIgnoreCase("PETS") || searchString.equalsIgnoreCase("OTHER")){
+            model.addAttribute("items", itemRepository.findItemsByCategoryContainingIgnoreCase(searchString));
+        }else{
+            model.addAttribute("items",itemRepository.findItemsByTitleContainingIgnoreCase(searchString));
+        }
+        model.addAttribute("funName", "");
+        return itemDir + "list";
+    }
 
     // Public
     @RequestMapping("/lost")
@@ -46,11 +67,11 @@ public class ItemController {
 
     // User
     @RequestMapping("/userFound")
-    public String userFoundItemsList(Model model, Authentication auth){
+    public String userFoundItemsList(Model model, Authentication auth) {
         User user = userRepository.findUserByUsername(auth.getName());
         HashSet<Item> found = new HashSet<>();
-        for(Item item : user.getItems()){
-            if(item.isLost() == false){
+        for (Item item : user.getItems()) {
+            if (item.isLost() == false) {
                 found.add(item);
             }
         }
@@ -90,7 +111,7 @@ public class ItemController {
     public String itemForm(Model model, Authentication auth) {
         model.addAttribute("item", new Item());
         User user = userRepository.findUserByUsername(auth.getName());
-        if(user.getRole().equalsIgnoreCase("ADMIN")){
+        if (user.getRole().equalsIgnoreCase("ADMIN")) {
             model.addAttribute("users", userRepository.findUsersByRole("USER"));
         }
         return itemDir + "form";
@@ -103,15 +124,15 @@ public class ItemController {
             return itemDir + "form";
         }
         User user = userRepository.findUserByUsername(auth.getName());
-        if(user.getRole().equalsIgnoreCase("USER")){
+        if (user.getRole().equalsIgnoreCase("USER")) {
             item.addUser(user);
             itemRepository.save(item);
             user.addItem(item);
             userRepository.save(user);
-        }else if(user.getRole().equalsIgnoreCase("ADMIN")){
-            if(userRepository.findUserByUsername(item.getOwner()) == null){
+        } else if (user.getRole().equalsIgnoreCase("ADMIN")) {
+            if (userRepository.findUserByUsername(item.getOwner()) == null) {
                 itemRepository.save(item);
-            }else{
+            } else {
                 User itemUser = userRepository.findUserByUsername(item.getOwner());
                 item.addUser(itemUser);
                 itemUser.addItem(item);

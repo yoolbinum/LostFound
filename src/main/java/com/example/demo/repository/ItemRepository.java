@@ -10,4 +10,7 @@ import java.util.Set;
 public interface ItemRepository extends CrudRepository<Item, Long> {
     Set<Item> findByLostTrue();
     Set<Item> findByLostFalse();
+    Set<Item> findItemsByCategoryContainingIgnoreCase(String category);
+    Set<Item> findItemsByTitleContainingIgnoreCase(String search);
+
 }

@@ -28,7 +28,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/**",
             "/items/lost",
             "/items/found",
-            "/items/detail/**"
+            "/items/detail/**",
+            "/items/search"
     };
 
     private static final String[] USER_MATCHERS = {

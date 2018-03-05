@@ -18,6 +18,9 @@
                                         <h4 class="title">Items</h4>
                                         <br/>
                                     </div>
+                                    <div class="text-center" th:if="${search}!=null" th:inline="text">
+                                        You searched for [[${search}]]
+                                    </div>
                                     <div class="content table-responsive table-upgrade">
                                         <table class="table">
                                             <thead>
