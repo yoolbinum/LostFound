@@ -87,8 +87,12 @@ public class ItemController {
 
     // Admin or User
     @GetMapping("/add")
-    public String itemForm(Model model) {
+    public String itemForm(Model model, Authentication auth) {
         model.addAttribute("item", new Item());
+        User user = userRepository.findUserByUsername(auth.getName());
+        if(user.getRole().equalsIgnoreCase("ADMIN")){
+            model.addAttribute("users", userRepository.findUsersByRole("USER"));
+        }
         return itemDir + "form";
     }
 
@@ -106,13 +110,14 @@ public class ItemController {
             userRepository.save(user);
         }else if(user.getRole().equalsIgnoreCase("ADMIN")){
             if(userRepository.findUserByUsername(item.getOwner()) == null){
-                return itemDir + "form";
+                itemRepository.save(item);
+            }else{
+                User itemUser = userRepository.findUserByUsername(item.getOwner());
+                item.addUser(itemUser);
+                itemUser.addItem(item);
+                itemRepository.save(item);
+                userRepository.save(itemUser);
             }
-            User itemUser = userRepository.findUserByUsername(item.getOwner());
-            item.addUser(itemUser);
-            itemUser.addItem(item);
-            itemRepository.save(item);
-            userRepository.save(itemUser);
         }
 
         return "redirect:" + "/items/lost";

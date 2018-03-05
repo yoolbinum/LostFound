@@ -62,10 +62,13 @@
                                 <div sec:authorize="hasAuthority('ADMIN')" class="row">
                                     <div class="col-md-11 pr-1">
                                         <div class="form-group">
-                                            <label> Owner Username: </label>
-                                            <input type="text" class="form-control" th:field="*{owner}"/>
-                                            <span th:if="${#fields.hasErrors('owner')}"
-                                                  th:errors="*{owner}"></span><br/>
+                                            <label> Owner Name: </label>
+                                            <select th:field="*{owner}">
+                                                <option th:value="0" text="Please Select"></option>
+                                                <option th:each="user : ${users}"
+                                                        th:value="${user.username}"
+                                                        th:text="${user.firstName}+ ' ' + ${user.lastName}">Wireframe</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
