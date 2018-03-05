@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.Set;
 
 @RequestMapping("/items")
 @Controller
@@ -56,6 +57,22 @@ public class ItemController {
         model.addAttribute("funName", "lostItemsList");
         return itemDir + "list";
     }
+
+    // Public
+    @PostMapping("/lost")
+    public String lostItemsCategory(Model model, HttpServletRequest request) {
+        String category = request.getParameter("category");
+        Set<Item> items = new HashSet<>();
+        for(Item item : itemRepository.findByLostTrue()){
+            if(item.getCategory().equalsIgnoreCase(category)){
+                items.add(item);
+            }
+        }
+        model.addAttribute("items", items);
+        model.addAttribute("funName", "lostItemsList");
+        return itemDir + "list";
+    }
+
 
     // Public
     @RequestMapping("/found")

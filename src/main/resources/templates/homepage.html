@@ -11,22 +11,46 @@
         <nav th:replace="common/base :: topNavbar"></nav>
         <div class="content">
             <div class="container-fluid">
-                <h3 sec:authorize="!hasAnyAuthority('USER','ADMIN')">
-                    You have not <strong>LOGGED IN</strong>
-                </h3>
-
-                <h3 sec:authorize="hasAuthority('USER')">
-                    You are an <strong>USER</strong>
-                </h3>
-
-                <h3 sec:authorize="hasAuthority('ADMIN')">
-                    You are an <strong>ADMIN</strong>
-                </h3>
+                <div class="row">
+                    <div class="col-sm-4 card " style="width: 20rem;">
+                        <img class="card-img-top" th:src="@{/img/clothes.jpg}" alt="..."/>
+                        <div class="card-block">
+                            <h4 class="card-title">Clothes</h4>
+                            <p class="card-text">Find the lost clothes.</p>
+                            <form th:action="@{/items/lost}" method="post">
+                                <input type="hidden" th:value="CLOTHES" name="category"/>
+                                <button th:type="submit" class="btn btn-info btn-fill">Find Clothes</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 card" style="width: 20rem;">
+                        <img class="card-img-top" th:src="@{/img/pets.jpg}" alt="..."/>
+                        <div class="card-block">
+                            <h4 class="card-title">Pets</h4>
+                            <p class="card-text">Find the lost pets.</p>
+                            <form th:action="@{/items/lost}" method="post">
+                                <input type="hidden" th:value="PETS" name="category"/>
+                                <button th:type="submit" class="btn btn-info btn-fill">Find Pets</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 card" style="width: 20rem;">
+                        <img class="card-img-top" th:src="@{/img/others.png}" alt="..."/>
+                        <div class="card-block">
+                            <h4 class="card-title">Others</h4>
+                            <p class="card-text">Find the lost others.</p>
+                            <form th:action="@{/items/lost}" method="post">
+                                <input type="hidden" th:value="OTHER" name="category"/>
+                                <button th:type="submit" class="btn btn-info btn-fill">Find Others</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
+
 <div th:replace="common/base :: jslinks"></div>
 </body>
 </html>
